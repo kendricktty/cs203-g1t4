@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 import lombok.*;
 
 import org.forksmash.recipeapp_backend.ingredient.Ingredient;
+import org.forksmash.recipeapp_backend.userprofile.User;
 
 @Entity
 @Getter
