@@ -1,6 +1,7 @@
 package org.forksmash.recipeapp_backend.security.config;
 
-import com.example.demo.appuser.AppUserService;
+import org.forksmash.recipeapp_backend.appuser.AppUserService;
+
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
