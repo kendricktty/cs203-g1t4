@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ import lombok.*;
 
 import org.forksmash.recipeapp_backend.ingredient.Ingredient;
 import org.forksmash.recipeapp_backend.userprofile.User;
+import org.forksmash.recipeapp_backend.util.JpaConverterJson;
 
 @Entity
 @Getter
@@ -34,7 +36,8 @@ public class Recipe {
     private String name;
 
     @NotNull(message = "An ingredient type must be assigned to an ingredient")
-    private char ingredientType;
+    @Convert(converter = JpaConverterJson.class)
+    private String data;
 
     @ManyToMany
     @JoinTable(name = "recipe_ingredients", 
