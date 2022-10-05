@@ -30,6 +30,7 @@ public class Ingredient {
 
     @NotNull(message = "An ingredient type must be assigned to an ingredient")
     private char ingredientType;
-    @ManyToMany(mappedBy = "recipes")
+
+    @ManyToMany(mappedBy = "ingredients")
     private Set<Recipe> recipes = new HashSet<>();
 }

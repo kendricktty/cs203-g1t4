@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 import lombok.*;
 
 import org.forksmash.recipeapp_backend.ingredient.Ingredient;
-import org.forksmash.recipeapp_backend.userprofile.User;
+import org.forksmash.recipeapp_backend.userprofile.UserProfile;
 import org.forksmash.recipeapp_backend.util.JpaConverterJson;
 
 @Entity
@@ -40,14 +40,14 @@ public class Recipe {
     private String data;
 
     @ManyToMany
-    @JoinTable(name = "recipe_ingredients", 
+    @JoinTable(name = "ingredients", 
         joinColumns = @JoinColumn(name = "recipeId"), 
         inverseJoinColumns = @JoinColumn(name = "ingredientId"))
     private Set<Ingredient> ingredients = new TreeSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "favourite_recipes",
-        joinColumns = @JoinColumn(name = "recipeId"),
-        inverseJoinColumns = @JoinColumn(name = "userId"))
-    private Set<User> favouritedUsers = new HashSet<>();
+    // @ManyToMany
+    // @JoinTable(name = "recipes",
+    //     joinColumns = @JoinColumn(name = "recipeId"),
+    //     inverseJoinColumns = @JoinColumn(name = "userId"))
+    // private Set<User> favouritedUsers = new HashSet<>();
 }
