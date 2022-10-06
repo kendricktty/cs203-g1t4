@@ -1,7 +1,8 @@
 package org.forksmash.recipeapp_backend.userprofile;
 
-import java.math.BigDecimal;
+import java.util.Set;
 import java.util.List;
+import java.util.TreeSet;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Constraint;
 import javax.validation.constraints.Min;
@@ -45,4 +47,8 @@ public class UserProfile {
     @ElementCollection
     @CollectionTable(name = "Allergies", joinColumns = @JoinColumn(name = "profileId"))
     private List<String> allergies;
+
+    @ManyToMany(mappedBy = "profiles")
+    private Set<Recipe> favouriteRecipes = new TreeSet<>();
+
 }

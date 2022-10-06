@@ -45,9 +45,9 @@ public class Recipe {
         inverseJoinColumns = @JoinColumn(name = "ingredientId"))
     private Set<Ingredient> ingredients = new TreeSet<>();
 
-    // @ManyToMany
-    // @JoinTable(name = "recipes",
-    //     joinColumns = @JoinColumn(name = "recipeId"),
-    //     inverseJoinColumns = @JoinColumn(name = "userId"))
-    // private Set<User> favouritedUsers = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "user_favourite_recipes",
+        joinColumns = @JoinColumn(name = "recipeId"),
+        inverseJoinColumns = @JoinColumn(name = "profileId"))
+    private Set<UserProfile> favouritedUsers = new HashSet<>();
 }
