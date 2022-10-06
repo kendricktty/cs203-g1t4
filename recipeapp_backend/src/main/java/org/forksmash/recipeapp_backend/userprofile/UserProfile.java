@@ -48,7 +48,6 @@ public class UserProfile {
     @CollectionTable(name = "Allergies", joinColumns = @JoinColumn(name = "profileId"))
     private List<String> allergies;
 
-    @ManyToMany(mappedBy = "profiles")
+    @ManyToMany(mappedBy = "usersWhoFavourite")
     private Set<Recipe> favouriteRecipes = new TreeSet<>();
-
 }

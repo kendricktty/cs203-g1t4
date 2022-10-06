@@ -47,7 +47,7 @@ public class Recipe {
 
     @ManyToMany
     @JoinTable(name = "user_favourite_recipes",
-        joinColumns = @JoinColumn(name = "recipeId"),
-        inverseJoinColumns = @JoinColumn(name = "profileId"))
-    private Set<UserProfile> favouritedUsers = new HashSet<>();
+        joinColumns = @JoinColumn(name = "profileId"),
+        inverseJoinColumns = @JoinColumn(name = "recipeId"))
+    private Set<UserProfile> usersWhoFavourite = new HashSet<>();
 }

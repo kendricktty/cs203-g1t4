@@ -1,6 +1,8 @@
 package org.forksmash.recipeapp_backend.appuser;
 
 import lombok.AllArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +20,7 @@ public class AppUserService implements UserDetailsService {
             "user with email %s not found";
 
     private final AppUserRepository appUserRepository;
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 //     private final ConfirmationTokenService confirmationTokenService;
 

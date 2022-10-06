@@ -1,8 +1,9 @@
 package org.forksmash.recipeapp_backend.security.config;
 
-import org.forksmash.recipeapp_backend.appuser.AppUserService;
-
 import lombok.AllArgsConstructor;
+
+import org.forksmash.recipeapp_backend.appuser.AppUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -18,7 +19,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AppUserService appUserService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    // https://stackoverflow.com/questions/67329349/error-required-a-bean-of-type-org-springframework-security-crypto-bcrypt-bcryp
+    // private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    // Do not need this line
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
