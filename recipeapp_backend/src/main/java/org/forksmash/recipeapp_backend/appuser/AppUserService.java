@@ -42,7 +42,7 @@ public class AppUserService implements UserDetailsService {
             // TODO check of attributes are the same and
             // TODO if email not confirmed send confirmation email.
 
-            throw new IllegalStateException("email already taken");
+            throw new IllegalStateException("Email already taken");
         }
 
         String encodedPassword = bCryptPasswordEncoder
