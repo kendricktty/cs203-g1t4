@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 
 import lombok.*;
 
-import org.forksmash.recipeapp_backend.appuser.AppUser;
+import org.forksmash.recipeapp_backend.user.User;
 import org.forksmash.recipeapp_backend.ingredient.Ingredient;
 import org.forksmash.recipeapp_backend.recipe.Recipe;
 
@@ -36,7 +36,7 @@ public class UserProfile {
     @NotNull
     @OneToOne
     @JoinColumn(name = "user_id")
-    private AppUser appUser;
+    private User appUser;
 
     @Min(0)
     private int age;

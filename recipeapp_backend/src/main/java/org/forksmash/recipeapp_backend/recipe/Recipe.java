@@ -21,6 +21,8 @@ import org.forksmash.recipeapp_backend.ingredient.Ingredient;
 import org.forksmash.recipeapp_backend.userprofile.UserProfile;
 import org.forksmash.recipeapp_backend.util.JpaConverterJson;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Getter
 @Setter
@@ -40,7 +42,7 @@ public class Recipe {
     private String data;
 
     @ManyToMany
-    @JoinTable(name = "ingredients", 
+    @JoinTable(name = "recipe_ingredients", 
         joinColumns = @JoinColumn(name = "recipeId"), 
         inverseJoinColumns = @JoinColumn(name = "ingredientId"))
     private Set<Ingredient> ingredients = new TreeSet<>();
