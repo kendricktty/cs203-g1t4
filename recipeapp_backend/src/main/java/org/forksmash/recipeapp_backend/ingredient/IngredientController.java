@@ -67,11 +67,11 @@ public class IngredientController {
         });
 
         Map<String, List<Ingredient>> ingredientsDict = new HashMap<>();
-        ingredientsDict.put("meat", meatIngredients);
-        ingredientsDict.put("seafood", seafoodIngredient);
-        ingredientsDict.put("vegetable", vegetableIngredients);
-        ingredientsDict.put("dairy", dairyIngredients);
-        ingredientsDict.put("fruit", fruitIngredients);
+        ingredientsDict.put("meats", meatIngredients);
+        ingredientsDict.put("seafoods", seafoodIngredient);
+        ingredientsDict.put("vegetables", vegetableIngredients);
+        ingredientsDict.put("dairies", dairyIngredients);
+        ingredientsDict.put("fruits", fruitIngredients);
         ingredientsDict.put("others", othersIngredients);
 
         return ResponseEntity.ok().body(ingredientsDict);
