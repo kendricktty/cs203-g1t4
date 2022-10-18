@@ -55,13 +55,14 @@ public class IngredientController {
      * @param ingredient
      * @return the newly added ingredient
      */
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/ingredients")
-    public Ingredient addIngredient(@Valid @RequestBody Ingredient ingredient){
-        Ingredient savedIngredient = ingredientService.addIngredient(ingredient);
-        if (savedIngredient ==  null) throw new IngredientExistsException(ingredient.getName());
-        return savedIngredient;
-    }
+    
+    // @ResponseStatus(HttpStatus.CREATED)
+    // @PostMapping("/ingredients")
+    // public Ingredient addIngredient(@Valid @RequestBody Ingredient ingredient){
+    //     Ingredient savedIngredient = ingredientService.addIngredient(ingredient);
+    //     if (savedIngredient ==  null) throw new IngredientExistsException(ingredient.getName());
+    //     return savedIngredient;
+    // }
 
     /* 
      * If there is no ingredient with the given "id", throw a IngredientNotFoundException

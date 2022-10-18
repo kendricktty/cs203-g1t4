@@ -29,10 +29,10 @@ public class Ingredient {
     private String name;
 
     @NotNull(message = "An ingredient type must be assigned to an ingredient")
-    private char ingredientType;
+    private String ingredientType;
 
-    @ManyToMany(mappedBy = "ingredients")
-    private Set<Recipe> recipes = new HashSet<>();
+    // @ManyToMany(mappedBy = "ingredients")
+    // private Set<Recipe> recipes = new HashSet<>();
 
     public Ingredient (String name){
         this.name = name;
