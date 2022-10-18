@@ -27,7 +27,16 @@ public class IngredientType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @NotNull(message = "Ingredient Type name should not be null")
+
     private String name;
+
+    @NotNull
+
+    public IngredientType(String name) {
+        this.name = name;
+    }
 
     @OneToOne(mappedBy = "ingredients", cascade = CascadeType.ALL, orphanRemoval = true)
 }

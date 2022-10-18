@@ -1,5 +1,6 @@
 package org.forksmash.recipeapp_backend.ingredientType;
-
+import java.util.List;
 public interface IngredientTypeService {
-    IngredientType getIngredientTypeByName(String name);
+    List<IngredientType> listIngredientTypes();
+    IngredientType getIngredientType(Long id);
 }
