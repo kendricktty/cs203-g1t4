@@ -3,4 +3,5 @@ import java.util.List;
 public interface IngredientTypeService {
     List<IngredientType> listIngredientTypes();
     IngredientType getIngredientType(Long id);
+    IngredientType saveIngredientType(IngredientType ingredientType);
 }

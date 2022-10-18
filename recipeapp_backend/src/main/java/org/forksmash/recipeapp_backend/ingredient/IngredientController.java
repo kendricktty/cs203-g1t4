@@ -1,22 +1,28 @@
 package org.forksmash.recipeapp_backend.ingredient;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api")
 public class IngredientController {
     private IngredientService ingredientService;
 
@@ -29,9 +35,50 @@ public class IngredientController {
      * @return list of all ingredients
      */
     @GetMapping("/ingredients")
-    public List<Ingredient> getIngredients(){
-        return ingredientService.listIngredients();
+    public ResponseEntity<Map<String, List<Ingredient>>> getIngredients() {
+
+        List<Ingredient> meatIngredients = new ArrayList<>();
+        List<Ingredient> seafoodIngredient = new ArrayList<>();
+        List<Ingredient> vegetableIngredients = new ArrayList<>();
+        List<Ingredient> dairyIngredients = new ArrayList<>();
+        List<Ingredient> fruitIngredients = new ArrayList<>();
+        List<Ingredient> othersIngredients = new ArrayList<>();
+
+        ingredientService.listIngredients().forEach(ingredient -> {
+            switch (ingredient.getIngredientType().getName()) {
+                case "Meat":
+                    meatIngredients.add(ingredient);
+                    break;
+                case "Seafood":
+                    seafoodIngredient.add(ingredient);
+                    break;
+                case "Vegetable":
+                    vegetableIngredients.add(ingredient);
+                    break;
+                case "Dairy":
+                    dairyIngredients.add(ingredient);
+                    break;
+                case "Fruit":
+                    fruitIngredients.add(ingredient);
+                    break;
+                default:
+                    othersIngredients.add(ingredient);
+            }
+        });
+
+        Map<String, List<Ingredient>> ingredientsDict = new HashMap<>();
+        ingredientsDict.put("meat", meatIngredients);
+        ingredientsDict.put("seafood", seafoodIngredient);
+        ingredientsDict.put("vegetable", vegetableIngredients);
+        ingredientsDict.put("dairy", dairyIngredients);
+        ingredientsDict.put("fruit", fruitIngredients);
+        ingredientsDict.put("others", othersIngredients);
+
+        return ResponseEntity.ok().body(ingredientsDict);
     }
+    // public List<Ingredient> getIngredients(){
+    //     return ingredientService.listIngredients();
+    // }
 
     /**
      * Search for ingredient with the given id

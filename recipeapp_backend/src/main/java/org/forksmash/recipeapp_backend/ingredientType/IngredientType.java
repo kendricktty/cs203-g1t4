@@ -1,17 +1,16 @@
 package org.forksmash.recipeapp_backend.ingredientType;
 
-import java.util.Set;
-import java.util.HashSet;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
-import org.forksmash.recipeapp_backend.recipe.Recipe;
+import org.forksmash.recipeapp_backend.ingredient.Ingredient;
 
 import lombok.*;
 
@@ -29,14 +28,12 @@ public class IngredientType {
     private long id;
 
     @NotNull(message = "Ingredient Type name should not be null")
-
     private String name;
 
-    @NotNull
+    @OneToMany(mappedBy = "ingredientType", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ingredient> ingredients;
 
     public IngredientType(String name) {
         this.name = name;
     }
-
-    @OneToOne(mappedBy = "ingredients", cascade = CascadeType.ALL, orphanRemoval = true)
 }
