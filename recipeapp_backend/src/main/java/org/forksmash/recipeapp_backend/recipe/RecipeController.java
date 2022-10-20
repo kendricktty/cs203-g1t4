@@ -11,12 +11,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.forksmash.recipeapp_backend.user.User;
+import org.forksmash.recipeapp_backend.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 public class RecipeController {
     private RecipeService recipeService;
+    private UserRepository userRepository;
+    private RecipeRepository recipeRepository;
     
     @Autowired
     public RecipeController(RecipeService recipeService) {
@@ -24,8 +29,8 @@ public class RecipeController {
     }
 
     @GetMapping("/recipes")
-    public List<Recipe> getRecipes() {
-        return recipeService.listRecipes();
+    public ResponseEntity<List<Recipe>> getRecipes() {
+        return ResponseEntity.ok().body(recipeService.listRecipes());
     }
 
     @GetMapping("/recipes/{id}")
@@ -39,7 +44,13 @@ public class RecipeController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/recipes")
     public Recipe addRecipe(@Valid @RequestBody Recipe recipe) { 
-        return recipeService.addRecipe(recipe); 
+        // Find the user 
+        User user = userRepository.findById((long)3).get();
+        // Recipe recipe = recipeRepository.findById((long)1).get();
+        // // if recipe has user id and recipe id
+        // if (user.getId() && recipeR)
+
+        return recipeService.addRecipe(recipe);
     }
 
     @PutMapping("/recipes/{id}")

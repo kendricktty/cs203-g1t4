@@ -1,9 +1,11 @@
 package org.forksmash.recipeapp_backend.userprofile;
 
 import java.util.Set;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Constraint;
 import javax.validation.constraints.Min;
@@ -48,6 +51,6 @@ public class UserProfile {
     @CollectionTable(name = "Allergies", joinColumns = @JoinColumn(name = "profileId"))
     private List<String> allergies;
 
-    @ManyToMany(mappedBy = "usersWhoFavourite")
-    private Set<Recipe> favouriteRecipes = new TreeSet<>();
+    @OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Recipe> favouriteRecipes;
 }
