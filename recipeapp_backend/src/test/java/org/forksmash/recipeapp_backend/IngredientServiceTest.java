@@ -21,6 +21,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import org.forksmash.recipeapp_backend.ingredient.*;
+import org.forksmash.recipeapp_backend.ingredientType.*;
+import org.forksmash.recipeapp_backend.ingredientType.IngredientType;
 
 @ExtendWith(MockitoExtension.class)
 
@@ -33,11 +35,11 @@ public class IngredientServiceTest {
     
     
     @Test
-    void addIngredient_NewTitle_ReturnSavedIngredient(){
+    void addIngredient_NewId_ReturnSavedIngredient(){
         // arrange ***
-        Ingredient ingredient = new Ingredient("This is a New Title");
+        Ingredient ingredient = new Ingredient("beef",IngredientType("meet"));
         // mock the "findbytitle" operation
-        when(ingredients.findByTitle(any(String.class))).thenReturn(new ArrayList<Ingredient>());
+        when(ingredients.findById((long) 11)).thenReturn(new ArrayList<Ingredient>());
         // mock the "save" operation 
         when(ingredients.save(any(Ingredient.class))).thenReturn(ingredient);
 
@@ -46,8 +48,11 @@ public class IngredientServiceTest {
         
         // assert ***
         assertNotNull(savedIngredient);
-        verify(ingredients).findByTitle(ingredient.getTitle());
+        verify(ingredients).findById(ingredient.getId());
         verify(ingredients).save(ingredient);
+    }
+    private IngredientType IngredientType(String string) {
+        return null;
     }
     /**
      * Write a test case for adding a new ingredient but the title already exists
@@ -57,22 +62,22 @@ public class IngredientServiceTest {
      * 
      */
     @Test
-    void addIngredient_SameTitle_ReturnNull(){
+    void addIngredient_SameId_ReturnNull(){
         // your code here
-        Ingredient ingredient = new Ingredient("The Same Title Exists");
-        List<Ingredient> sameTitles = new ArrayList<Ingredient>();
-        sameTitles.add(new Ingredient("The Same Title Exists"));
-        when(ingredients.findByTitle(ingredient.getTitle())).thenReturn(sameTitles);
+        Ingredient ingredient = new Ingredient("beef",IngredientType("meet"));
+        List<Ingredient> sameIds = new ArrayList<Ingredient>();
+        sameIds.add(new Ingredient("beef",IngredientType("meet")));
+        when(ingredients.findById(ingredient.getId())).thenReturn(sameIds);
 
         Ingredient savedIngredient = ingredientService.addIngredient(ingredient);
         
         assertNull(savedIngredient);
-        verify(ingredients).findByTitle(ingredient.getTitle());
+        verify(ingredients).findById(ingredient.getId());
     }
 
     @Test
     void updateIngredient_NotFound_ReturnNull(){
-        Ingredient ingredient = new Ingredient("Updated Title of Ingredient");
+        Ingredient ingredient = new Ingredient("beef",IngredientType("meet"));
         Long ingredientId = 10L;
         when(ingredients.findById(ingredientId)).thenReturn(Optional.empty());
         
@@ -82,54 +87,4 @@ public class IngredientServiceTest {
         verify(ingredients).findById(ingredientId);
     }
 
-    
-    @Test
-    void countLongestTitles_OneLongest_Return1(){
-        // your code here
-        List<Ingredient> newIngredients = new ArrayList<Ingredient>();
-        newIngredients.add(new Ingredient("The Longest"));
-        newIngredients.add(new Ingredient("The Longest Title"));
-        newIngredients.add(new Ingredient("The Longest Title of Ingredient"));
-        when(ingredients.findAll()).thenReturn(newIngredients);
-
-        int count = ingredientService.countLongestIngredientTitles();
-        
-        assertEquals(1, count);
-        verify(ingredients).findAll();
-    }
-
-    @Test
-    void countLongestTitles_TwoLongest_Return2(){
-        // your code here
-        List<Ingredient> newIngredients = new ArrayList<Ingredient>();
-        newIngredients.add(new Ingredient("The Longest"));
-        newIngredients.add(new Ingredient("The Longer Title of Ingredient"));
-        newIngredients.add(new Ingredient("The Longest"));
-        newIngredients.add(new Ingredient("The Longest Title of Ingredient"));
-        
-        when(ingredients.findAll()).thenReturn(newIngredients);
-
-        int count = ingredientService.countLongestIngredientTitles();
-        
-        assertEquals(2, count);
-        verify(ingredients).findAll();
-    }
-
-    @Test
-    void countLongestTitles_AllLongest_Return4(){
-        // your code here
-        List<Ingredient> newIngredients = new ArrayList<Ingredient>();
-        newIngredients.add(new Ingredient("The Long Ingredient"));
-        newIngredients.add(new Ingredient("The Longer Ingredient"));
-        newIngredients.add(new Ingredient("The Longerer Ingredient"));
-        newIngredients.add(new Ingredient("The Longest Ingredient"));
-        
-        when(ingredients.findAll()).thenReturn(newIngredients);
-
-        int count = ingredientService.countLongestIngredientTitles();
-        
-        assertEquals(4, count);
-        verify(ingredients).findAll();
-    }
-   
 }
