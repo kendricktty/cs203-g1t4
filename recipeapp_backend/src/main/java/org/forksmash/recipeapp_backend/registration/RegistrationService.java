@@ -1,11 +1,12 @@
 package org.forksmash.recipeapp_backend.registration;
 
-import com.example.demo.appuser.AppUser;
-import com.example.demo.appuser.AppUserRole;
-import com.example.demo.appuser.AppUserService;
-import com.example.demo.email.EmailSender;
-import com.example.demo.registration.token.ConfirmationToken;
-import com.example.demo.registration.token.ConfirmationTokenService;
+import org.forksmash.recipeapp_backend.user.User;
+import org.forksmash.recipeapp_backend.user.UserRepository;
+import org.forksmash.recipeapp_backend.user.UserService;
+import org.forksmash.recipeapp_backend.user.UserServiceImpl;
+// import com.example.demo.email.EmailSender;
+// import com.example.demo.registration.token.ConfirmationToken;
+// import com.example.demo.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,16 +17,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class RegistrationService {
 
-    private final AppUserService appUserService;
-    private final ConfirmationTokenService confirmationTokenService;
+    private final UserService appUserService;
+    // private final ConfirmationTokenService confirmationTokenService;
 
     public String register(RegistrationRequest request) {
-        boolean isValidEmail = emailValidator.
-                test(request.getEmail());
+        // boolean isValidEmail = emailValidator.
+        //         test(request.getEmail());
 
-        if (!isValidEmail) {
-            throw new IllegalStateException("email not valid");
-        }
+        // if (!isValidEmail) {
+        //     throw new IllegalStateException("email not valid");
+        // } may be needed
 
         String token = appUserService.signUpUser(
                 new AppUser(
