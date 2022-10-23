@@ -34,6 +34,8 @@ public class IngredientServiceTest {
     private IngredientServiceImpl ingredientService;
     
     
+    public IngredientServiceTest(String string) {
+    }
     @Test
     void addIngredient_NewId_ReturnSavedIngredient(){
         // arrange ***
@@ -74,17 +76,8 @@ public class IngredientServiceTest {
         assertNull(savedIngredient);
         verify(ingredients).findById(ingredient.getId());
     }
-
-    @Test
-    void updateIngredient_NotFound_ReturnNull(){
-        Ingredient ingredient = new Ingredient("beef",IngredientType("meet"));
-        Long ingredientId = 10L;
-        when(ingredients.findById(ingredientId)).thenReturn(Optional.empty());
-        
-        Ingredient updatedIngredient = ingredientService.updateIngredient(ingredientId, ingredient);
-        
-        assertNull(updatedIngredient);
-        verify(ingredients).findById(ingredientId);
+    public Long getId() {
+        return null;
     }
 
 }

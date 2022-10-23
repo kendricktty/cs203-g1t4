@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.forksmash.recipeapp_backend.ingredient.*;
+import org.forksmash.recipeapp_backend.ingredientType.IngredientType;
 import org.forksmash.recipeapp_backend.user.*;
 
 /** Start an actual HTTP server listening at a random port*/
@@ -55,8 +56,8 @@ public class IngredientIntegrationTest {
 
 	@Test
 	public void getIngredients_Success() throws Exception {
-		URI uri = new URI(baseUrl + port + "/ingredients");
-		ingredients.save(new IngredientServiceTest("Gone With The Wind"));
+		URI uri = new URI(baseUrl + port + "api/ingredients");
+		ingredients.save(new Ingredient("beef",IngredientType("meet")));
 		
 		// Need to use array with a ReponseEntity here
 		ResponseEntity<IngredientServiceTest[]> result = restTemplate.getForEntity(uri, IngredientServiceTest[].class);
@@ -66,11 +67,16 @@ public class IngredientIntegrationTest {
 		assertEquals(1, ingredients.length);
 	}
 
-	@Test
+	private IngredientType IngredientType(String string) {
+        return null;
+    }
+
+    @Test
 	public void getIngredient_ValidIngredientId_Success() throws Exception {
 		IngredientServiceTest ingredient = new IngredientServiceTest("Gone With The Wind");
+        new Ingredient("beef",IngredientType("meet"))
 		Long id = ingredients.save(ingredient).getId();
-		URI uri = new URI(baseUrl + port + "/ingredients/" + id);
+		URI uri = new URI(baseUrl + port + "api/ingredients/" + id);
 		
 		ResponseEntity<IngredientServiceTest> result = restTemplate.getForEntity(uri, IngredientServiceTest.class);
 			
@@ -80,7 +86,7 @@ public class IngredientIntegrationTest {
 
 	@Test
 	public void getIngredient_InvalidIngredientId_Failure() throws Exception {
-		URI uri = new URI(baseUrl + port + "/ingredients/1");
+		URI uri = new URI(baseUrl + port + "api/ingredients/1");
 		
 		ResponseEntity<IngredientServiceTest> result = restTemplate.getForEntity(uri, IngredientServiceTest.class);
 			
@@ -89,7 +95,7 @@ public class IngredientIntegrationTest {
 
 	@Test
 	public void addIngredient_Success() throws Exception {
-		URI uri = new URI(baseUrl + port + "/ingredients");
+		URI uri = new URI(baseUrl + port + "api/ingredients");
 		IngredientServiceTest ingredient = new IngredientServiceTest("A New Hope");
 		users.save(new User("admin", encoder.encode("goodpassword"), "ROLE_ADMIN"));
 
@@ -107,8 +113,8 @@ public class IngredientIntegrationTest {
 	 */
 	@Test
 	public void deleteIngredient_ValidIngredientId_Success() throws Exception {
-		IngredientServiceTest ingredient = ingredients.save(new IngredientServiceTest("A New Hope"));
-		URI uri = new URI(baseUrl + port + "/ingredients/" + ingredient.getId().longValue());
+		IngredientServiceTest ingredient = ingredients.save(new IngredientServiceTest());
+		URI uri = new URI(baseUrl + port + "api/ingredients/" + ingredient.getId().longValue());
 		users.save(new User("admin", encoder.encode("goodpassword"), "ROLE_ADMIN"));
 		
 		//restTemplate.withBasicAuth("admin", "goodpassword").delete(uri);
@@ -123,7 +129,7 @@ public class IngredientIntegrationTest {
 
 	@Test
 	public void deleteIngredient_InvalidIngredientId_Failure() throws Exception {
-		URI uri = new URI(baseUrl + port + "/ingredients/1");
+		URI uri = new URI(baseUrl + port + "api/ingredients/1");
 		users.save(new User("admin", encoder.encode("goodpassword"), "ROLE_ADMIN"));
 		
 		ResponseEntity<Void> result = restTemplate.withBasicAuth("admin", "goodpassword")
@@ -135,7 +141,7 @@ public class IngredientIntegrationTest {
 	@Test
 	public void updateIngredient_ValidIngredientId_Success() throws Exception {
 		IngredientServiceTest ingredient = ingredients.save(new IngredientServiceTest("A New Hope"));
-		URI uri = new URI(baseUrl + port + "/ingredients/" + ingredient.getId().longValue());
+		URI uri = new URI(baseUrl + port + "api/ingredients/" + ingredient.getId().longValue());
 		IngredientServiceTest newIngredientInfo = new IngredientServiceTest("A New Vision");
 		users.save(new User("admin", encoder.encode("goodpassword"), "ROLE_ADMIN"));
 		
@@ -148,7 +154,7 @@ public class IngredientIntegrationTest {
 
 	@Test
 	public void updateIngredient_InvalidIngredientId_Failure() throws Exception {
-		URI uri = new URI(baseUrl + port + "/ingredients/1");
+		URI uri = new URI(baseUrl + port + "api/ingredients/1");
 		IngredientServiceTest newIngredientInfo = new IngredientServiceTest("A New Vision");
 		users.save(new User("admin", encoder.encode("goodpassword"), "ROLE_ADMIN"));
 		

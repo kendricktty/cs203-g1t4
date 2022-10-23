@@ -59,8 +59,4 @@ public class IngredientServiceImpl implements IngredientService {
         ingredients.deleteById(id);
     }
 
-    public Ingredient updateIngredient(Long ingredientId, Ingredient ingredient) {
-        return null;
-    }
-
 }
