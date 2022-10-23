@@ -73,15 +73,14 @@ public class IngredientIntegrationTest {
 
     @Test
 	public void getIngredient_ValidIngredientId_Success() throws Exception {
-		IngredientServiceTest ingredient = new IngredientServiceTest("Gone With The Wind");
-        new Ingredient("beef",IngredientType("meet"))
+		IngredientServiceTest ingredient = new IngredientServiceTest(new Ingredient("beef",new IngredientType("meet")));
 		Long id = ingredients.save(ingredient).getId();
 		URI uri = new URI(baseUrl + port + "api/ingredients/" + id);
 		
 		ResponseEntity<IngredientServiceTest> result = restTemplate.getForEntity(uri, IngredientServiceTest.class);
 			
 		assertEquals(200, result.getStatusCode().value());
-		assertEquals(ingredient.getTitle(), result.getBody().getTitle());
+		assertEquals(ingredient.getId(), result.getBody().getId());
 	}
 
 	@Test
@@ -97,7 +96,7 @@ public class IngredientIntegrationTest {
 	public void addIngredient_Success() throws Exception {
 		URI uri = new URI(baseUrl + port + "api/ingredients");
 		IngredientServiceTest ingredient = new IngredientServiceTest("A New Hope");
-		users.save(new User("admin", encoder.encode("goodpassword"), "ROLE_ADMIN"));
+		users.save(new User());
 
 		ResponseEntity<IngredientServiceTest> result = restTemplate.withBasicAuth("admin", "goodpassword")
 										.postForEntity(uri, ingredient, IngredientServiceTest.class);

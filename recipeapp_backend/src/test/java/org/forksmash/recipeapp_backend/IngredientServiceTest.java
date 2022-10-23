@@ -36,10 +36,12 @@ public class IngredientServiceTest {
     
     public IngredientServiceTest(String string) {
     }
+    public IngredientServiceTest(Ingredient ingredient) {
+    }
     @Test
     void addIngredient_NewId_ReturnSavedIngredient(){
         // arrange ***
-        Ingredient ingredient = new Ingredient("beef",IngredientType("meet"));
+        Ingredient ingredient = new Ingredient("beef",new IngredientType("meet"));
         // mock the "findbytitle" operation
         when(ingredients.findById((long) 11)).thenReturn(new ArrayList<Ingredient>());
         // mock the "save" operation 
@@ -66,9 +68,9 @@ public class IngredientServiceTest {
     @Test
     void addIngredient_SameId_ReturnNull(){
         // your code here
-        Ingredient ingredient = new Ingredient("beef",IngredientType("meet"));
+        Ingredient ingredient = new Ingredient("beef",new IngredientType("meet"));
         List<Ingredient> sameIds = new ArrayList<Ingredient>();
-        sameIds.add(new Ingredient("beef",IngredientType("meet")));
+        sameIds.add(new Ingredient("beef",new IngredientType("meet")));
         when(ingredients.findById(ingredient.getId())).thenReturn(sameIds);
 
         Ingredient savedIngredient = ingredientService.addIngredient(ingredient);
