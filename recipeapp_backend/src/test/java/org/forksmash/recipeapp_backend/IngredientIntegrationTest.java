@@ -117,9 +117,9 @@ public class IngredientIntegrationTest {
 	// 									.exchange(uri, HttpMethod.DELETE, null, Void.class);
 		
 	// 	assertEquals(200, result.getStatusCode().value());
-	// 	// An empty Optional should be returned by "findById" after deletion
+	// 	// An empty Optional should be returned by "findByName" after deletion
 	// 	Optional<Ingredient> emptyValue = Optional.empty();
-	// 	assertEquals(emptyValue, ingredients.findById(ingredient.getId()));
+	// 	assertEquals(emptyValue, ingredients.findByName(ingredient.getId()));
 	// }
 
 	// @Test

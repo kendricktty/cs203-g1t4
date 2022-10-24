@@ -37,7 +37,7 @@ public class IngredientServiceTest {
         // arrange ***
         Ingredient ingredient = new Ingredient("beef",new IngredientType("meet"));
         // mock the "findbyId" operation
-        when(ingredients.findById(any(Long.class))).thenReturn(new ArrayList<Ingredient>());
+        when(ingredients.findByName(any(String.class))).thenReturn(new ArrayList<Ingredient>());
         // mock the "save" operation 
         when(ingredients.save(any(Ingredient.class))).thenReturn(ingredient);
 
@@ -46,7 +46,7 @@ public class IngredientServiceTest {
         
         // assert ***
         assertNotNull(savedIngredient);
-        verify(ingredients).findById(ingredient.getId());
+        verify(ingredients).findByName(ingredient.getName());
         verify(ingredients).save(ingredient);
     }
 
@@ -63,12 +63,12 @@ public class IngredientServiceTest {
         Ingredient ingredient = new Ingredient("beef",new IngredientType("meet"));
         List<Ingredient> sameIds = new ArrayList<Ingredient>();
         sameIds.add(new Ingredient("beef",new IngredientType("meet")));
-        when(ingredients.findById(ingredient.getId())).thenReturn(sameIds);
+        when(ingredients.findByName(ingredient.getName())).thenReturn(sameIds);
 
         Ingredient savedIngredient = ingredientService.addIngredient(ingredient);
         
         assertNull(savedIngredient);
-        verify(ingredients).findById(ingredient.getId());
+        verify(ingredients).findByName(ingredient.getName());
     }
 
 }
