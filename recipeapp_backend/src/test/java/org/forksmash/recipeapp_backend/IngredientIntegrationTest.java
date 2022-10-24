@@ -32,7 +32,7 @@ public class IngredientIntegrationTest {
 
 	@Autowired
 	/**
-	 * Use TestRestTemplate for testing a real instance of your application as an external actor.
+	 * Use TestRestTemplate for testing a real instance of the application as an external actor.
 	 * Convenient subclass of RestTemplate that is suitable for integration tests.
  	 * It is fault tolerant, and optionally can carry Basic authentication headers.
 	 */
@@ -57,7 +57,7 @@ public class IngredientIntegrationTest {
 	@Test
 	public void getIngredients_Success() throws Exception {
 		URI uri = new URI(baseUrl + port + "api/ingredients");
-		ingredients.save(new Ingredient("beef",IngredientType("meet")));
+		ingredients.save(new Ingredient("beef",new IngredientType("meet")));
 		
 		// Need to use array with a ReponseEntity here
 		ResponseEntity<IngredientServiceTest[]> result = restTemplate.getForEntity(uri, IngredientServiceTest[].class);
@@ -67,17 +67,13 @@ public class IngredientIntegrationTest {
 		assertEquals(1, ingredients.length);
 	}
 
-	private IngredientType IngredientType(String string) {
-        return null;
-    }
-
     @Test
 	public void getIngredient_ValidIngredientId_Success() throws Exception {
-		IngredientServiceTest ingredient = new IngredientServiceTest(new Ingredient("beef",new IngredientType("meet")));
+		Ingredient ingredient = new Ingredient("beef", new IngredientType("meat"));
 		Long id = ingredients.save(ingredient).getId();
 		URI uri = new URI(baseUrl + port + "api/ingredients/" + id);
 		
-		ResponseEntity<IngredientServiceTest> result = restTemplate.getForEntity(uri, IngredientServiceTest.class);
+		ResponseEntity<Ingredient> result = restTemplate.getForEntity(uri, Ingredient.class);
 			
 		assertEquals(200, result.getStatusCode().value());
 		assertEquals(ingredient.getId(), result.getBody().getId());
@@ -87,7 +83,7 @@ public class IngredientIntegrationTest {
 	public void getIngredient_InvalidIngredientId_Failure() throws Exception {
 		URI uri = new URI(baseUrl + port + "api/ingredients/1");
 		
-		ResponseEntity<IngredientServiceTest> result = restTemplate.getForEntity(uri, IngredientServiceTest.class);
+		ResponseEntity<Ingredient> result = restTemplate.getForEntity(uri, Ingredient.class);
 			
 		assertEquals(404, result.getStatusCode().value());
 	}
@@ -95,14 +91,14 @@ public class IngredientIntegrationTest {
 	@Test
 	public void addIngredient_Success() throws Exception {
 		URI uri = new URI(baseUrl + port + "api/ingredients");
-		IngredientServiceTest ingredient = new IngredientServiceTest("A New Hope");
-		users.save(new User());
+		Ingredient ingredient = new Ingredient("beef", new IngredientType("meat"));
+		users.save(new User("John", "Steven", "john@gmail.com", "password"));
 
-		ResponseEntity<IngredientServiceTest> result = restTemplate.withBasicAuth("admin", "goodpassword")
-										.postForEntity(uri, ingredient, IngredientServiceTest.class);
+		ResponseEntity<Ingredient> result = restTemplate.withBasicAuth("john@gmail.com", "password")
+										.postForEntity(uri, ingredient, Ingredient.class);
 			
 		assertEquals(201, result.getStatusCode().value());
-		assertEquals(ingredient.getTitle(), result.getBody().getTitle());
+		assertEquals(ingredient.getId(), result.getBody().getId());
 	}
 
 	/**
@@ -137,29 +133,4 @@ public class IngredientIntegrationTest {
 		assertEquals(404, result.getStatusCode().value());
 	}
 
-	@Test
-	public void updateIngredient_ValidIngredientId_Success() throws Exception {
-		IngredientServiceTest ingredient = ingredients.save(new IngredientServiceTest("A New Hope"));
-		URI uri = new URI(baseUrl + port + "api/ingredients/" + ingredient.getId().longValue());
-		IngredientServiceTest newIngredientInfo = new IngredientServiceTest("A New Vision");
-		users.save(new User("admin", encoder.encode("goodpassword"), "ROLE_ADMIN"));
-		
-		ResponseEntity<IngredientServiceTest> result = restTemplate.withBasicAuth("admin", "goodpassword")
-										.exchange(uri, HttpMethod.PUT, new HttpEntity<>(newIngredientInfo), IngredientServiceTest.class);
-			
-		assertEquals(200, result.getStatusCode().value());
-		assertEquals(newIngredientInfo.getTitle(), result.getBody().getTitle());
-	}
-
-	@Test
-	public void updateIngredient_InvalidIngredientId_Failure() throws Exception {
-		URI uri = new URI(baseUrl + port + "api/ingredients/1");
-		IngredientServiceTest newIngredientInfo = new IngredientServiceTest("A New Vision");
-		users.save(new User("admin", encoder.encode("goodpassword"), "ROLE_ADMIN"));
-		
-		ResponseEntity<IngredientServiceTest> result = restTemplate.withBasicAuth("admin", "goodpassword")
-										.exchange(uri, HttpMethod.PUT, new HttpEntity<>(newIngredientInfo), IngredientServiceTest.class);
-			
-		assertEquals(404, result.getStatusCode().value());
-	}
 }
