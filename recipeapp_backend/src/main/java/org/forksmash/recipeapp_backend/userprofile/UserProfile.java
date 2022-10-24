@@ -43,9 +43,17 @@ public class UserProfile {
 
     @Min(0)
     private int age;
-    private char sex;
+    private String sex;
     private double heightCM;
     private double weightKG;
+
+    public UserProfile(int age, String sex, double weightKG, double heightCM, User user) {
+        this.age = age;
+        this.sex = sex;
+        this.heightCM = heightCM;
+        this.weightKG = weightKG;
+        this.appUser = user;
+    } 
 
     @ElementCollection
     @CollectionTable(name = "Allergies", joinColumns = @JoinColumn(name = "profileId"))

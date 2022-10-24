@@ -9,18 +9,39 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.forksmash.recipeapp_backend.user.User;
 import org.forksmash.recipeapp_backend.user.UserRepository;
+import org.forksmash.recipeapp_backend.userprofile.UserProfile;
+import org.forksmash.recipeapp_backend.userprofile.UserProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+@Slf4j
+@RestController
+@RequestMapping("/api")
 public class RecipeController {
     private RecipeService recipeService;
     private UserRepository userRepository;
+
+    @Autowired
+    private UserProfileRepository userProfileRepository;
+
+    @Autowired
     private RecipeRepository recipeRepository;
     
     @Autowired
@@ -30,8 +51,9 @@ public class RecipeController {
 
     @GetMapping("/recipes")
     public ResponseEntity<List<Recipe>> getRecipes() {
-        return ResponseEntity.ok().body(recipeService.listRecipes());
-    }
+        // UserProfile userProfile = userProfileRepository.findById((long) 1).get();
+        return ResponseEntity.ok().body(recipeService.listRecipesFromProfileId((long) 1));
+    }  
 
     @GetMapping("/recipes/{id}")
     public Recipe getRecipe(@PathVariable Long id) {
@@ -43,12 +65,16 @@ public class RecipeController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/recipes")
-    public Recipe addRecipe(@Valid @RequestBody Recipe recipe) { 
-        // Find the user 
-        User user = userRepository.findById((long)3).get();
-        // Recipe recipe = recipeRepository.findById((long)1).get();
-        // // if recipe has user id and recipe id
-        // if (user.getId() && recipeR)
+    public Recipe addRecipe(@Valid @RequestBody Recipe recipe, @RequestHeader("Authorization") String bearerToken) { 
+
+        String token = bearerToken.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = verifier.verify(token);
+
+        long userProfileId = decodedJWT.getClaim("id").asLong();
+
+        recipe.setUserProfile(userProfileRepository.findById(userProfileId).get());
 
         return recipeService.addRecipe(recipe);
     }

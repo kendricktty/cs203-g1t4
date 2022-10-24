@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@TypeDef(name = "json", typeClass = JsonStringType.class)
+//@TypeDef(name = "json", typeClass = JsonStringType.class)
 public class Recipe {
     private @Id @GeneratedValue (strategy = GenerationType.IDENTITY) Long id;
 
@@ -47,16 +47,35 @@ public class Recipe {
     private UserProfile userProfile;
 
     @NotNull(message = "An ingredient type must be assigned to an ingredient")
-    @Convert(converter = JpaConverterJson.class)
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
-    private String data;
+    //@Convert(converter = JpaConverterJson.class)
+    //@Type(type = "json")
+    @Column(name = "info", columnDefinition = "json")
+    private String info;
 
-    @ManyToMany
-    @JoinTable(name = "recipe_ingredients", 
-        joinColumns = @JoinColumn(name = "recipeId"), 
-        inverseJoinColumns = @JoinColumn(name = "ingredientId"))
-    private Set<Ingredient> ingredients = new TreeSet<>();
+    @Column(name = "instructions", columnDefinition = "json")
+    private String instructions;
+
+    @Column(name = "extended_ingredients", columnDefinition = "json")
+    private String extendedIngredients;
+
+    @Column(name = "nutrition", columnDefinition = "json")
+    private String nutrition;
+
+    public Recipe(String info, String instructions, String extendedIngredients, String nutrition, UserProfile userProfile) {
+        this.info = info;
+        this.instructions = instructions;
+        this.extendedIngredients = extendedIngredients;
+        this.nutrition = nutrition;
+        this.userProfile = userProfile;
+    }
+
+    
+
+    // @ManyToMany
+    // @JoinTable(name = "recipe_ingredients", 
+    //     joinColumns = @JoinColumn(name = "recipeId"), 
+    //     inverseJoinColumns = @JoinColumn(name = "ingredientId"))
+    // private Set<Ingredient> ingredients = new TreeSet<>();
 
    
 }

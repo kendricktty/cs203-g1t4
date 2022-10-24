@@ -16,9 +16,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.forksmash.recipeapp_backend.user.UserRepository;
+import org.forksmash.recipeapp_backend.userprofile.UserProfile;
+import org.forksmash.recipeapp_backend.userprofile.UserProfileRepository;
 import org.json.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,11 +46,20 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-
+    
     private final AuthenticationManager authenticationManager;
 
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
+    private UserProfileRepository userProfileRepository;
+    private UserRepository userRepository;
+
+    // public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
+    //     this.authenticationManager = authenticationManager;
+    // }
+
+    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, ApplicationContext ctx) {
         this.authenticationManager = authenticationManager;
+        this.userRepository = ctx.getBean(UserRepository.class);
+        this.userProfileRepository = ctx.getBean(UserProfileRepository.class);
     }
 
 
@@ -95,6 +109,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         User user = (User)authentication.getPrincipal();
 
+        org.forksmash.recipeapp_backend.user.User appUser = userRepository.findByEmail(user.getUsername());
+        UserProfile userProfile = userProfileRepository.findByUserId(appUser.getId());
+
         // Must hide HMAC256 secret key "secret" in an environment variable later
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         String accessToken = JWT.create()
@@ -102,6 +119,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
             .withIssuer(request.getRequestURL().toString())
             .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+            .withClaim("id", userProfile.getProfileId())
+            .withClaim("firstName", appUser.getFirstName())
+            .withClaim("lastName", appUser.getLastName())
             .sign(algorithm);
 
         String refreshToken = JWT.create()
@@ -114,6 +134,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         tokens.put("access_token", accessToken);
         tokens.put("refresh_token", refreshToken);
         tokens.put("status", HttpStatus.OK);
+
          
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
