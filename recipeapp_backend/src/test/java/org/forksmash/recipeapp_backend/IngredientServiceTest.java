@@ -33,10 +33,10 @@ public class IngredientServiceTest {
     private IngredientServiceImpl ingredientService;
     
     @Test
-    void addIngredient_NewId_ReturnSavedIngredient(){
+    void addIngredient_NewName_ReturnSavedIngredient(){
         // arrange ***
         Ingredient ingredient = new Ingredient("beef",new IngredientType("meet"));
-        // mock the "findbyId" operation
+        // mock the "findbyName" operation
         when(ingredients.findByName(any(String.class))).thenReturn(new ArrayList<Ingredient>());
         // mock the "save" operation 
         when(ingredients.save(any(Ingredient.class))).thenReturn(ingredient);
@@ -58,12 +58,12 @@ public class IngredientServiceTest {
      * 
      */
     @Test
-    void addIngredient_SameId_ReturnNull(){
+    void addIngredient_SameName_ReturnNull(){
         
         Ingredient ingredient = new Ingredient("beef",new IngredientType("meet"));
-        List<Ingredient> sameIds = new ArrayList<Ingredient>();
-        sameIds.add(new Ingredient("beef",new IngredientType("meet")));
-        when(ingredients.findByName(ingredient.getName())).thenReturn(sameIds);
+        List<Ingredient> sameNames = new ArrayList<Ingredient>();
+        sameNames.add(new Ingredient("beef",new IngredientType("meet")));
+        when(ingredients.findByName(ingredient.getName())).thenReturn(sameNames);
 
         Ingredient savedIngredient = ingredientService.addIngredient(ingredient);
         
