@@ -31,7 +31,9 @@ public class RecipeServiceImpl implements RecipeService {
     }  
 
     @Override
-    public Recipe getRecipe(Long id) { return recipes.findById(id).orElse(null); }
+    public Recipe getRecipe(int recipeDataId, Long profileId) { 
+        return recipes.findByRecipeDataIdAndProfileId(recipeDataId, profileId); 
+    }
 
     @Override
     public Recipe addRecipe(Recipe recipe) { 
@@ -52,6 +54,8 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public void deleteRecipe(Long id) { recipes.deleteById(id); }
+    public void deleteRecipe(int recipeDataId, Long userProfileId) { 
+        recipes.deleteByRecipeDataIdAndProfileId(recipeDataId, userProfileId); 
+    }
 
 }

@@ -50,19 +50,34 @@ public class RecipeController {
     }
 
     @GetMapping("/recipes")
-    public ResponseEntity<List<Recipe>> getRecipes() {
-        // UserProfile userProfile = userProfileRepository.findById((long) 1).get();
-        return ResponseEntity.ok().body(recipeService.listRecipesFromProfileId((long) 1));
+    public ResponseEntity<List<Recipe>> getRecipes(@RequestHeader("Authorization") String bearerToken) {
+        String token = bearerToken.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = verifier.verify(token);
+
+        long userProfileId = decodedJWT.getClaim("id").asLong();
+
+        // System.out.println("fav recipes: " + recipeService.listRecipesFromProfileId(userProfileId));
+
+        return ResponseEntity.ok().body(recipeService.listRecipesFromProfileId(userProfileId));
     }  
 
-    @GetMapping("/recipes/{id}")
-    public Recipe getRecipe(@PathVariable Long id) {
-        Recipe recipe = recipeService.getRecipe(id);
+    @GetMapping("/recipes/{recipeDataId}")
+    public Recipe getRecipe(@PathVariable("recipeDataId") int recipeDataId, @RequestHeader("Authorization") String bearerToken) {
+        String token = bearerToken.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = verifier.verify(token);
+
+        long userProfileId = decodedJWT.getClaim("id").asLong();
+        
+        Recipe recipe = recipeService.getRecipe(recipeDataId, userProfileId);
         if (recipe == null)
-            throw new RecipeNotFoundException(id);
+            throw new RecipeNotFoundException(recipeDataId);
         return recipe;
     }
-
+ 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/recipes")
     public Recipe addRecipe(@Valid @RequestBody Recipe recipe, @RequestHeader("Authorization") String bearerToken) { 
@@ -87,8 +102,8 @@ public class RecipeController {
         return recipe;
     }
 
-    @DeleteMapping("/recipes/{id}")
-    public void deleteRecipe(@PathVariable Long recipeDataId, @RequestHeader("Authorization") String bearerToken) {
+    @DeleteMapping("/recipes/{recipeDataId}")
+    public void deleteRecipe(@PathVariable int recipeDataId, @RequestHeader("Authorization") String bearerToken) {
         try {
             String token = bearerToken.substring("Bearer ".length());
             Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
@@ -97,6 +112,9 @@ public class RecipeController {
 
             long userProfileId = decodedJWT.getClaim("id").asLong();
             
+            System.out.println("recipeDataId" + recipeDataId);
+            System.out.println("userProfileId" + userProfileId);
+
             recipeService.deleteRecipe(recipeDataId, userProfileId);
         } catch (EmptyResultDataAccessException e) {
             throw new RecipeNotFoundException(recipeDataId);
