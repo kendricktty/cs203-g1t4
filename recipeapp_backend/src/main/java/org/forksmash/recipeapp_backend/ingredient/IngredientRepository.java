@@ -2,6 +2,7 @@ package org.forksmash.recipeapp_backend.ingredient;
 
 import java.util.List;
 
+import org.forksmash.recipeapp_backend.ingredientType.IngredientType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
