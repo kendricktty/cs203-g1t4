@@ -2,13 +2,18 @@ package org.forksmash.recipeapp_backend.dietaryCalculator;
 
 import java.util.HashMap;
 
-// Logic of dietaryCaclulator
-// (Convert json to hashmap)
-// Get nutriential breakdown from user's favorite recipe. 
-// Convert hashmap of total nutrient to percentage
-// Get nutriential percentage from user's favorite recipe.
-// From that hashmap, find nutrients where user is lacking. and recommend meals where that is
-// the recommended amount for daily meals. (Not good to consume too much at once.)
+/* Logical-Breakdown
+Input json
+    See users fav recipe -> get nutriential values from those -> 
+
+ * -> Hashmap of total actual nutrient -> function to calculate total nutrient value
+ * -> Determine hashmap of expected nutriential breakdown
+ * -> hashmap of total actual nutrient minus projected 
+ * -> Only concerned with negative (deficit)
+ * -> Return hashmap of key : value pair, key being deficit nutrients and value being the 
+ * recommended values per meal.
+ * 
+ */
 
 public class dietaryCalculator {
 
@@ -17,42 +22,38 @@ public class dietaryCalculator {
 
     }
 
-    // input should be json file?
-    private HashMap<String, Double> userNutrientBreakdownPercentage() {
+    // THIS IS ESSENTIALLY THE actual main method.
+    // Return hashmap of deficient key with recommeded values per meal
+    // INCOMPLETE
+    private HashMap<String, Double> userRequiredNutrients() {
 
-        // convert info from json file to hashmap
-        // All measurements in mg for now for standardisation.
-        // eg. key, value pair. calcium : 1000
-        // Once got the total, convert to percentage and return a hashmap of percentage
-        // of
-        // nutriential breakdown.
-        // eg. calcium : 40 where 40 is the percentage of calcium in the user's total
-        // diet.
-
-        // Base HashMap
-
-        return null;
-    }
-
-    //
-    private HashMap<String, Double> userRequiredNutrients(HashMap<String, Double> totalHashMapOfUser) {
-
-        //input is a hashmap of the total nutrient by user.
-        //Get projected/expected nutrient from the total.
-        //input - projected nutrient map
-
-        Double total = getTotal(totalHashMapOfUser);
+        // Handling input to get total actual hashmap.
+        // Find the overallTotal value with the method below.
+        // With the overallTotal -> Get projected hashmap.
+        // actual hashmap minus projected hashmap.
+        // Only concerned with negative (deficit)
+        // Return hashmap of key : value pair, key being deficit nutrients and value
+        // being the
+        // recommended values per meal.
 
         return null;
     }
 
-    private double getTotal(HashMap<String, Double> totalHashMapOfUser){
-        //input is the hashmap of the total nutrient by user.
+    private HashMap<String, Double> projectedHashMap(Double overallTotal) {
+        // Get projected hashmap from the overall total.
+        // Use dietaryIdeal.
+
+        return null;
+
+    }
+
+    private double getTotal(HashMap<String, Double> totalHashMapOfUser) {
+        // input is the hashmap of the total nutrient by user.
         Double total = 0.0;
-        for(Double value : totalHashMapOfUser.values()){
-            total+= value; 
+        for (Double value : totalHashMapOfUser.values()) {
+            total += value;
         }
-        
+
         return total;
     }
 
