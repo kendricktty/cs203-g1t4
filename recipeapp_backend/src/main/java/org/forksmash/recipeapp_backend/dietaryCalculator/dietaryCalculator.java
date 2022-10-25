@@ -35,11 +35,13 @@ public class dietaryCalculator {
     }
 
     //
-    private HashMap<String, Double> userRequiredNutrients() {
+    private HashMap<String, Double> userRequiredNutrients(HashMap<String, Double> totalHashMapOfUser) {
 
         //input is a hashmap of the total nutrient by user.
-        
-        //
+        //Get projected/expected nutrient from the total.
+        //input - projected nutrient map
+
+        Double total = getTotal(totalHashMapOfUser);
 
         return null;
     }

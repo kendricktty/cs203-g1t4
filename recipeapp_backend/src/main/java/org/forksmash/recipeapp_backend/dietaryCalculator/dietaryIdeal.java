@@ -4,10 +4,48 @@ import java.util.HashMap;
 
 public class dietaryIdeal {
     private static HashMap<String, Double> idealPercentageBreakdown;
+    private static HashMap<String, Double> idealAverageMealBreakdown;
 
     // Source https://www.webmd.com/vitamins-and-supplements/vitamins-minerals-how-much-should-you-take
+
+    public dietaryIdeal() {
+        mapOfIdealAverageActualBreakdown();
+        mapOfIdealPercentageBreakdown();
+    }
+    
+    // Implementing actual ideal breakdown per meal.
+    // CHANGE THE VALUES HERE. THIS IS STILL PERCENTAGE
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    private static void mapOfIdealAverageActualBreakdown() {
+        if (idealAverageMealBreakdown == null) {
+            idealAverageMealBreakdown = new HashMap<>();
+
+            idealAverageMealBreakdown.put("Calcium", 24.02333146);
+            idealAverageMealBreakdown.put("vitaminB", 12.01166573);
+            idealAverageMealBreakdown.put("copper", 0.021620998);
+            idealAverageMealBreakdown.put("Fluoride", 0.096093326);
+            idealAverageMealBreakdown.put("Folic Acid", 0.009609333);
+            idealAverageMealBreakdown.put("Iodine", 0.0036035);
+            idealAverageMealBreakdown.put("Iron", 0.288279978);
+            idealAverageMealBreakdown.put("Magnesium", 9.609332584);
+            idealAverageMealBreakdown.put("Manganese", 0.048046663);
+            idealAverageMealBreakdown.put("Phosphorus", 16.81633202);
+            idealAverageMealBreakdown.put("Selenium", 0.001321283);
+            idealAverageMealBreakdown.put("Sodium", 36.03499719);
+            idealAverageMealBreakdown.put("VitaminA", 0.019218665);
+            idealAverageMealBreakdown.put("VitaminB3", 0.360349972);
+            idealAverageMealBreakdown.put("VitaminB6", 0.036034997);
+            idealAverageMealBreakdown.put("VitaminC", 0.019218665);
+            idealAverageMealBreakdown.put("VitaminD", 0.00036035);
+            idealAverageMealBreakdown.put("VitaminE", 0.360349972);
+            idealAverageMealBreakdown.put("Zinc", 0.240233315);
+        }
+    }
+
+
     // Implementing the ideal percentage breakdown;
     // Change Here when you wish to change percentage
+
     private static void mapOfIdealPercentageBreakdown() {
         if (idealPercentageBreakdown == null) {
             idealPercentageBreakdown = new HashMap<>();
@@ -37,4 +75,9 @@ public class dietaryIdeal {
     public static HashMap<String, Double> getIdealPercentageBreakdown() {
         return idealPercentageBreakdown;
     }
+
+    public static HashMap<String, Double> getIdealActualBreakdown() {
+        return idealAverageMealBreakdown;
+    }
+
 }
