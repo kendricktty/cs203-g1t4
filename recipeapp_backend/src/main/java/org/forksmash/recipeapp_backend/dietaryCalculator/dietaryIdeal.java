@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class dietaryIdeal {
     private static HashMap<String, Double> idealPercentageBreakdown;
 
+    // Source https://www.webmd.com/vitamins-and-supplements/vitamins-minerals-how-much-should-you-take
     // Implementing the ideal percentage breakdown;
     // Change Here when you wish to change percentage
     private static void mapOfIdealPercentageBreakdown() {
