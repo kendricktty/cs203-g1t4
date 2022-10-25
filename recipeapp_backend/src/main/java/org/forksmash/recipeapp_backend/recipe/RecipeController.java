@@ -88,11 +88,18 @@ public class RecipeController {
     }
 
     @DeleteMapping("/recipes/{id}")
-    public void deleteRecipe(@PathVariable Long id) {
+    public void deleteRecipe(@PathVariable Long recipeDataId, @RequestHeader("Authorization") String bearerToken) {
         try {
-            recipeService.deleteRecipe(id);
+            String token = bearerToken.substring("Bearer ".length());
+            Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+
+            long userProfileId = decodedJWT.getClaim("id").asLong();
+            
+            recipeService.deleteRecipe(recipeDataId, userProfileId);
         } catch (EmptyResultDataAccessException e) {
-            throw new RecipeNotFoundException(id);
+            throw new RecipeNotFoundException(recipeDataId);
         }
     }
 }
