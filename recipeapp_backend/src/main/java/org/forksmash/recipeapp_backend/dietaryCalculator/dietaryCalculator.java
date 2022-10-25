@@ -37,7 +37,21 @@ public class dietaryCalculator {
     //
     private HashMap<String, Double> userRequiredNutrients() {
 
+        //input is a hashmap of the total nutrient by user.
+        
+        //
+
         return null;
+    }
+
+    private double getTotal(HashMap<String, Double> totalHashMapOfUser){
+        //input is the hashmap of the total nutrient by user.
+        Double total = 0.0;
+        for(Double value : totalHashMapOfUser.values()){
+            total+= value; 
+        }
+        
+        return total;
     }
 
     private HashMap<String, Double> createBaseMap() {
