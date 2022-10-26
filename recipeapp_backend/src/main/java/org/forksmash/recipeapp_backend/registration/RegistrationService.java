@@ -4,6 +4,8 @@ import org.forksmash.recipeapp_backend.user.User;
 import org.forksmash.recipeapp_backend.user.UserRepository;
 import org.forksmash.recipeapp_backend.user.UserService;
 import org.forksmash.recipeapp_backend.user.UserServiceImpl;
+import org.forksmash.recipeapp_backend.userprofile.UserProfile;
+
 // import com.example.demo.email.EmailSender;
 // import com.example.demo.registration.token.ConfirmationToken;
 // import com.example.demo.registration.token.ConfirmationTokenService;
@@ -39,10 +41,11 @@ public class RegistrationService {
                         new ArrayList<>()
                     )
                 );
+
         appUserService.addRoleToUser(request.getEmail(), "ROLE_USER");
-        //return null;
 
-
+        UserProfile userProfile = new UserProfile(request.getAge(), request.getSex(), request.getWeightKG(), request.getHeightCM(), user);
+        appUserService.addProfileToUser(request.getEmail(), userProfile);
     }
 
     // @Transactional
