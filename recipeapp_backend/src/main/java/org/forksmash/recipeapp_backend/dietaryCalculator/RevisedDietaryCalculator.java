@@ -3,8 +3,6 @@ package org.forksmash.recipeapp_backend.dietaryCalculator;
 import java.util.Map;
 
 import org.forksmash.recipeapp_backend.dietaryCalculator.nutrient.Nutrient;
-import org.forksmash.recipeapp_backend.dietaryCalculator.nutrient.bad_nutrient.BadNutrient;
-import org.forksmash.recipeapp_backend.dietaryCalculator.nutrient.good_nutrient.GoodNutrient;
 
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
