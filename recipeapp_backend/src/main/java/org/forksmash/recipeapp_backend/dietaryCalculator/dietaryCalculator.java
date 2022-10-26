@@ -15,7 +15,7 @@ Input json
  * 
  */
 
-public class dietaryCalculator {
+public class DietaryCalculator {
 
     // sample test code
     public static void main(String[] args) {
@@ -35,6 +35,13 @@ public class dietaryCalculator {
         // Return hashmap of key : value pair, key being deficit nutrients and value
         // being the
         // recommended values per meal.
+
+        // Comments:
+        // There are good nutrients and bad nutrients
+        // If we are only concerned with negative (deficit) for all of them
+        // What does this mean for nutrients like say fat and sugar?
+        // Should try and penalise bad nutrients that go beyond percentage daily value
+        // As well as good nutrients that fall way below percentage daily value
 
         return null;
     }

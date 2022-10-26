@@ -2,13 +2,15 @@ package org.forksmash.recipeapp_backend.dietaryCalculator;
 
 import java.util.HashMap;
 
-public class dietaryIdeal {
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class DietaryIdeal {
     private static HashMap<String, Double> idealPercentageBreakdown;
     private static HashMap<String, Double> idealAverageMealBreakdown;
 
     // Source https://www.webmd.com/vitamins-and-supplements/vitamins-minerals-how-much-should-you-take
 
-    public dietaryIdeal() {
+    public DietaryIdeal() {
         mapOfIdealAverageActualBreakdown();
         mapOfIdealPercentageBreakdown();
     }
@@ -21,7 +23,7 @@ public class dietaryIdeal {
             idealAverageMealBreakdown = new HashMap<>();
 
             idealAverageMealBreakdown.put("Calcium", 24.02333146);
-            idealAverageMealBreakdown.put("vitaminB", 12.01166573);
+            idealAverageMealBreakdown.put("VitaminB", 12.01166573);
             idealAverageMealBreakdown.put("copper", 0.021620998);
             idealAverageMealBreakdown.put("Fluoride", 0.096093326);
             idealAverageMealBreakdown.put("Folic Acid", 0.009609333);
