@@ -35,7 +35,7 @@ public class RevisedDietaryCalculator {
         for (Nutrient nutrient : nutrients) {
             int score = (int) nutrient.getPercentageOfDailyNeeds() / 10;
             if (nutrient.isBad()) {
-                score = ~score + 1;
+                score *= -1;
             }
             excessOrDeficitMap.put(nutrient, score);
         }
