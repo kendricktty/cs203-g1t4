@@ -41,17 +41,17 @@ public class RecipeServiceImpl implements RecipeService {
         return recipes.save(recipe); 
     }
 
-    @Override
-    public Recipe updateRecipe(Long id, Recipe newRecipe) {
-        return recipes.findById(id).map(recipe -> {
-            // recipe.setData(newRecipe.getData());
-            recipe.setInfo(newRecipe.getInfo());
-            recipe.setInstructions(newRecipe.getInstructions());
-            recipe.setExtendedIngredients(newRecipe.getExtendedIngredients());
-            recipe.setNutrition(newRecipe.getNutrition());
-            return recipes.save(recipe);
-        }).orElse(null);
-    }
+    // @Override
+    // public Recipe updateRecipe(Long id, Recipe newRecipe) {
+    //     return recipes.findById(id).map(recipe -> {
+    //         // recipe.setData(newRecipe.getData());
+    //         recipe.setInfo(newRecipe.getInfo());
+    //         recipe.setInstructions(newRecipe.getInstructions());
+    //         recipe.setExtendedIngredients(newRecipe.getExtendedIngredients());
+    //         recipe.setNutrition(newRecipe.getNutrition());
+    //         return recipes.save(recipe);
+    //     }).orElse(null);
+    // }
 
     @Override
     public void deleteRecipe(int recipeDataId, Long userProfileId) { 

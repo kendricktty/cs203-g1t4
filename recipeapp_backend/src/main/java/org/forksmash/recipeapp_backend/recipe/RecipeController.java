@@ -94,13 +94,13 @@ public class RecipeController {
         return recipeService.addRecipe(recipe);
     }
 
-    @PutMapping("/recipes/{id}")
-    public Recipe updateRecipe(@PathVariable Long id, @RequestBody Recipe newRecipe) {
-        Recipe recipe = recipeService.updateRecipe(id, newRecipe);
-        if (recipe == null)
-            throw new RecipeNotFoundException(id);
-        return recipe;
-    }
+    // @PutMapping("/recipes/{id}")
+    // public Recipe updateRecipe(@PathVariable Long id, @RequestBody Recipe newRecipe) {
+    //     Recipe recipe = recipeService.updateRecipe(id, newRecipe);
+    //     if (recipe == null)
+    //         throw new RecipeNotFoundException(id);
+    //     return recipe;
+    // }
 
     @DeleteMapping("/recipes/{recipeDataId}")
     public void deleteRecipe(@PathVariable int recipeDataId, @RequestHeader("Authorization") String bearerToken) {
