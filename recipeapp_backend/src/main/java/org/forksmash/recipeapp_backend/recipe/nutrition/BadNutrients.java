@@ -1,4 +1,4 @@
-package org.forksmash.recipeapp_backend.dietaryCalculator.nutrient;
+package org.forksmash.recipeapp_backend.recipe.nutrition;
 import java.util.Set;
 import java.util.HashSet;
 public class BadNutrients {

@@ -1,4 +1,4 @@
-package org.forksmash.recipeapp_backend.dietaryCalculator.nutrient;
+package org.forksmash.recipeapp_backend.recipe.nutrition;
 import lombok.*;
 
 @ToString
@@ -13,15 +13,15 @@ public class Nutrient {
     private final boolean isBad;
 
     public Nutrient(String name, double amount, String unit, double percentageOfDailyNeeds) {
-        if (BadNutrients.BAD_NUTRIENTS.contains(name)) {
-            this.isBad = true;
-        } else {
-            this.isBad = false;
-        }
         this.name = name;
         this.amount = amount;
         this.unit = unit;
         this.percentageOfDailyNeeds = percentageOfDailyNeeds;
+        if (BadNutrients.BAD_NUTRIENTS.contains(this.name)) {
+            this.isBad = true;
+        } else {
+            this.isBad = false;
+        }
     }
 
     // Source: https://www.fda.gov/food/new-nutrition-facts-label/daily-value-new-nutrition-and-supplement-facts-labels#referenceguide
