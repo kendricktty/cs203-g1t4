@@ -27,15 +27,22 @@ public class RevisedDietaryCalculator {
         return nutrients;
     }
     
-    public static Map<Nutrient, Integer> calculateNutrientExcessOrDeficit(String nutritionJson) {
+    public static Map<Nutrient, Double> calculateNutrientExcessOrDeficit(String nutritionJson) {
         Nutrient[] nutrients = nutrientJsonToArray(nutritionJson);
-        Map<Nutrient, Integer> excessOrDeficitMap = new HashMap<>();
-        // Award a deficiency score based on the %DV of that nutrient, from 1 to 10.
-        // If the nutrient is bad, negate the score. This will mean the system should recommend less recipes that contain a lot of that nutrient
+        Map<Nutrient, Double> excessOrDeficitMap = new HashMap<>();
+        /* 
+         * Awards a deficiency/excess score between 1 and 10 based on the %DV of that nutrient.
+         * The score is derived by taking the %DV of that nutrient and dividing it by 10
+         * The smaller the score, the less healthy the nutrient is, and the less the
+         * program should recommend recipes containing large quantities of that recipe.
+         */
         for (Nutrient nutrient : nutrients) {
-            int score = (int) nutrient.getPercentageOfDailyNeeds() / 10;
+            double score = nutrient.getPercentageOfDailyNeeds() / 10;
+            /* If a nutrient is bad, like fats or sugar, the score derived at this stage is an excess 
+             * Hence, take 10 minus the derived score to convert it into a "deficiency" value
+            */
             if (nutrient.isBad()) {
-                score *= -1;
+                score = 10 - score;
             }
             excessOrDeficitMap.put(nutrient, score);
         }

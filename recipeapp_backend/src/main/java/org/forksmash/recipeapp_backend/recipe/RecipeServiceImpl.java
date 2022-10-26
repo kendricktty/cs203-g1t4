@@ -2,12 +2,15 @@ package org.forksmash.recipeapp_backend.recipe;
 
 import org.forksmash.recipeapp_backend.userprofile.UserProfile;
 import org.forksmash.recipeapp_backend.userprofile.UserProfileRepository;
+import org.forksmash.recipeapp_backend.recipe.nutrition.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 @Slf4j
 @Service
@@ -54,4 +57,51 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public void deleteRecipe(Long id) { recipes.deleteById(id); }
 
+    /* 
+     * Based on all recipes favourited by the user, determine the average excess/deficiency score
+     * for that recipe
+     * Refer to RevisedDietaryCalculator.java for more details
+     */
+
+    // Nested class to keep track of the current sum and total number of elements to find the average later
+    private class Series {
+        private double sum;
+        private int total;
+        public Series(int sum, int total) {
+            this.sum = sum;
+            this.total = total;
+        }
+        public double average() {
+            return sum / total;
+        }
+    }
+
+    public Map<Nutrient, Double> findAverageNutritionDeficitForRecommendation() {
+        List<Recipe> recipes = listRecipes();
+
+        // To average out the total score
+        Map<Nutrient, Series> mapToAverageOut = new HashMap<>();
+
+        for (Recipe recipe : recipes) {
+            String recipeNutrition = recipe.getNutrition();
+            Map<Nutrient, Double> excessDeficiencyMap = RevisedDietaryCalculator.calculateNutrientExcessOrDeficit(recipeNutrition);
+            for (Nutrient nutrient : excessDeficiencyMap.keySet()) {
+                Series currTotal = mapToAverageOut.get(nutrient);
+                if (currTotal == null)
+                    currTotal = new Series(0, 0);
+                currTotal.sum += excessDeficiencyMap.get(nutrient);
+                currTotal.total++;
+                mapToAverageOut.put(nutrient, currTotal);
+            }
+        }
+
+        // Average out the sum and return the result
+        Map<Nutrient, Double> masterExcessDeficiencyMap = new HashMap<>();
+
+        for (Nutrient nutrient : mapToAverageOut.keySet()) {
+            double average = mapToAverageOut.get(nutrient).average();
+            masterExcessDeficiencyMap.put(nutrient, average);
+        }
+        return masterExcessDeficiencyMap;
+    }
 }
