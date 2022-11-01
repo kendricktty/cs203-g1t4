@@ -1,8 +1,8 @@
-package org.forksmash.recipeapp_backend.nutrient;
+package org.forksmash.recipeapp_backend.nutrient.util;
 
 import java.util.TreeMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.forksmash.recipeapp_backend.nutrient.NutrientDesired;
 
 import lombok.*;
 

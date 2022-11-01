@@ -4,7 +4,7 @@ import lombok.*;
 @ToString
 @Getter
 @Setter
-public class NutrientActual extends NutrientDesired {
+public class NutrientActual extends Nutrient {
     private double amount;
     private double percentageOfDailyNeeds;
 

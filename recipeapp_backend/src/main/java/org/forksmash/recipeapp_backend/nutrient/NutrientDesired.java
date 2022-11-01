@@ -1,12 +1,7 @@
 package org.forksmash.recipeapp_backend.nutrient;
-import lombok.*;
 
-@ToString
-@EqualsAndHashCode
-@Getter
-@Setter
-@AllArgsConstructor
-public class NutrientDesired {
-    private String name;
-    private String unit;
+public class NutrientDesired extends Nutrient {
+    public NutrientDesired(String name, String unit) {
+        super(name, unit);
+    }
 }

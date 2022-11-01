@@ -1,5 +1,11 @@
 package org.forksmash.recipeapp_backend.nutrient;
 
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.forksmash.recipeapp_backend.nutrient.util.NutrientConverter;
+import org.forksmash.recipeapp_backend.nutrient.util.NutrientIdeal;
+
 import java.util.HashMap;
 
 /* Logical-Breakdown
@@ -16,6 +22,12 @@ Input json
  */
 
 public class NutrientServiceImpl implements NutrientService {
+    public TreeMap<NutrientActual, Double> userRequiredNutrients(String nutrientJson) {
+        // Convert the JSON into Nutrient array
+        NutrientActual[] jsonToArray = NutrientConverter.nutrientJsonToArray(nutrientJson);
+        TreeMap<NutrientDesired, Double> recommendedAmounts = NutrientIdeal.mealBreakdownMap;
+    }
+    
 
     // sample test code
     public static void main(String[] args) {

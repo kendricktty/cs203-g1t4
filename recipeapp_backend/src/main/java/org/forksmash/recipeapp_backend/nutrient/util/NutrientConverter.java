@@ -3,18 +3,18 @@ package org.forksmash.recipeapp_backend.nutrient.util;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.forksmash.recipeapp_backend.nutrient.Nutrient;
+import org.forksmash.recipeapp_backend.nutrient.NutrientActual;
 
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class NutrientConverter {
-    private static Nutrient[] nutrientJsonToArray(String nutritionJson) {
+    public static NutrientActual[] nutrientJsonToArray(String nutritionJson) {
         ObjectMapper mapper = new ObjectMapper();
-        Nutrient[] nutrients = null;
+        NutrientActual[] nutrients = null;
         try {
-            nutrients = mapper.readValue(nutritionJson, Nutrient[].class);
+            nutrients = mapper.readValue(nutritionJson, NutrientActual[].class);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
