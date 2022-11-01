@@ -56,7 +56,44 @@ public class NutrientIdeal {
             NutrientDesired pantothenicAcid = new NutrientDesired("Pantothenic acid", "mg");
             mealBreakdownMap.put(pantothenicAcid, 5.0);
 
-            
+            NutrientDesired zinc = new NutrientDesired("Zinc", "mg");
+            mealBreakdownMap.put(zinc, 11.0);
+
+            NutrientDesired selenium = new NutrientDesired("Selenium", "mcg");
+            mealBreakdownMap.put(selenium, 55.0);
+
+            NutrientDesired copper = new NutrientDesired("Copper", "mg");
+            mealBreakdownMap.put(copper, 0.9);
+
+            NutrientDesired manganese = new NutrientDesired("Manganese", "mg");
+            mealBreakdownMap.put(manganese, 2.3);
+
+            NutrientDesired chromium = new NutrientDesired("Chromium", "mcg");
+            mealBreakdownMap.put(chromium, 35.0);
+
+            NutrientDesired phosphorus = new NutrientDesired("phosphorus", "mg");
+            mealBreakdownMap.put(phosphorus, 1250.0);
+
+            NutrientDesired iodine = new NutrientDesired("iodine", "mcg");
+            mealBreakdownMap.put(iodine, 150.0);
+
+            NutrientDesired magnesium = new NutrientDesired("magnesium", "mg");
+            mealBreakdownMap.put(magnesium, 420.0);
+
+            NutrientDesired molybdenum = new NutrientDesired("molybdenum", "mcg");
+            mealBreakdownMap.put(molybdenum, 45.0);
+
+            NutrientDesired chloride = new NutrientDesired("chloride", "mg");
+            mealBreakdownMap.put(chloride, 2300.0);
+
+            NutrientDesired potassium = new NutrientDesired("potassium", "mg");
+            mealBreakdownMap.put(potassium, 4700.0);
+
+            NutrientDesired choline = new NutrientDesired("choline", "mg");
+            mealBreakdownMap.put(choline, 550.0);
+
+            NutrientDesired protein = new NutrientDesired("protein", "g");
+            mealBreakdownMap.put(protein, 11.0);
         }
     };
 
