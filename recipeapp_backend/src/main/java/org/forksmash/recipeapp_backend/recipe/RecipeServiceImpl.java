@@ -2,6 +2,7 @@ package org.forksmash.recipeapp_backend.recipe;
 
 import org.forksmash.recipeapp_backend.userprofile.UserProfile;
 import org.forksmash.recipeapp_backend.userprofile.UserProfileRepository;
+import org.forksmash.recipeapp_backend.nutrient.Nutrient;
 import org.forksmash.recipeapp_backend.recipe.nutrition.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,9 +1,10 @@
 package org.forksmash.recipeapp_backend.recipe.nutrition;
 
 import java.util.Map;
-import java.util.HashMap;
 
-import org.forksmash.recipeapp_backend.recipe.nutrition.Nutrient;
+import org.forksmash.recipeapp_backend.nutrient.Nutrient;
+
+import java.util.HashMap;
 
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -33,7 +34,7 @@ public class RevisedDietaryCalculator {
         /* 
          * Awards a deficiency/excess score between 1 and 10 based on the %DV of that nutrient.
          * The score is derived by taking the %DV of that nutrient and dividing it by 10
-         * The smaller the score, the less healthy the nutrient is, and the less the
+         * The smaller the score, the greater the deficit of good nutrient/excess of bad nutrient, and the less the
          * program should recommend recipes containing large quantities of that recipe.
          */
         for (Nutrient nutrient : nutrients) {

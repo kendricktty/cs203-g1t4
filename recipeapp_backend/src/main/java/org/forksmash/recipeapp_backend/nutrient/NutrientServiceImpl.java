@@ -1,4 +1,4 @@
-package org.forksmash.recipeapp_backend.dietaryCalculator;
+package org.forksmash.recipeapp_backend.nutrient;
 
 import java.util.HashMap;
 
@@ -15,7 +15,7 @@ Input json
  * 
  */
 
-public class DietaryCalculator {
+public class NutrientServiceImpl implements NutrientService {
 
     // sample test code
     public static void main(String[] args) {
