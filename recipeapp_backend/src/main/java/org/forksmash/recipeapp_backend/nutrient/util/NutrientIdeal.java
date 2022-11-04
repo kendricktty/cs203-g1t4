@@ -97,6 +97,12 @@ public class NutrientIdeal {
         }
     };
 
+    public static final TreeMap<String, NutrientDesired> nutrients = new TreeMap<>() {{
+        for (NutrientDesired nutrient : mealBreakdownMap.keySet()) {
+            nutrients.put(nutrient.getName(), nutrient);
+        }
+    }};
+
     // Source
     // https://www.webmd.com/vitamins-and-supplements/vitamins-minerals-how-much-should-you-take
     // Implementing actual ideal breakdown per meal.

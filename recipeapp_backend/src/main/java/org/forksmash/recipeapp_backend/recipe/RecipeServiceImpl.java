@@ -76,33 +76,4 @@ public class RecipeServiceImpl implements RecipeService {
             return sum / total;
         }
     }
-
-    public Map<Nutrient, Double> findAverageNutritionDeficitForRecommendation() {
-        List<Recipe> recipes = listRecipes();
-
-        // To average out the total score
-        Map<Nutrient, Series> mapToAverageOut = new HashMap<>();
-
-        for (Recipe recipe : recipes) {
-            String recipeNutrition = recipe.getNutrition();
-            Map<Nutrient, Double> excessDeficiencyMap = RevisedDietaryCalculator.calculateNutrientExcessOrDeficit(recipeNutrition);
-            for (Nutrient nutrient : excessDeficiencyMap.keySet()) {
-                Series currTotal = mapToAverageOut.get(nutrient);
-                if (currTotal == null)
-                    currTotal = new Series(0, 0);
-                currTotal.sum += excessDeficiencyMap.get(nutrient);
-                currTotal.total++;
-                mapToAverageOut.put(nutrient, currTotal);
-            }
-        }
-
-        // Average out the sum and return the result
-        Map<Nutrient, Double> masterExcessDeficiencyMap = new HashMap<>();
-
-        for (Nutrient nutrient : mapToAverageOut.keySet()) {
-            double average = mapToAverageOut.get(nutrient).average();
-            masterExcessDeficiencyMap.put(nutrient, average);
-        }
-        return masterExcessDeficiencyMap;
-    }
 }
