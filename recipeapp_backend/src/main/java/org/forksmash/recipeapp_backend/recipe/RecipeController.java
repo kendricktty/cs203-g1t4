@@ -22,6 +22,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.forksmash.recipeapp_backend.nutrient.NutrientService;
 import org.forksmash.recipeapp_backend.user.User;
 import org.forksmash.recipeapp_backend.user.UserRepository;
 import org.forksmash.recipeapp_backend.userprofile.UserProfile;
@@ -37,6 +38,7 @@ import org.springframework.http.ResponseEntity;
 public class RecipeController {
     private RecipeService recipeService;
     private UserRepository userRepository;
+    private NutrientService nutrientService;
 
     @Autowired
     private UserProfileRepository userProfileRepository;
