@@ -2,12 +2,16 @@ package org.forksmash.recipeapp_backend.recipe;
 
 import org.forksmash.recipeapp_backend.userprofile.UserProfile;
 import org.forksmash.recipeapp_backend.userprofile.UserProfileRepository;
+import org.forksmash.recipeapp_backend.nutrient.Nutrient;
+import org.forksmash.recipeapp_backend.recipe.nutrition.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 @Slf4j
 @Service
@@ -57,5 +61,8 @@ public class RecipeServiceImpl implements RecipeService {
     public void deleteRecipe(int recipeDataId, Long userProfileId) { 
         recipes.deleteByRecipeDataIdAndProfileId(recipeDataId, userProfileId); 
     }
+
+    @Override
+    public void deleteRecipe(Long id) { recipes.deleteById(id); }
 
 }
