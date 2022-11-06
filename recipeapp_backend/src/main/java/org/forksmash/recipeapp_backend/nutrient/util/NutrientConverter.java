@@ -10,15 +10,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class NutrientConverter {
-    public static NutrientActual[] nutrientJsonToArray(String nutritionJson) {
-        ObjectMapper mapper = new ObjectMapper();
+    public static NutrientActual[] nutrientJsonToArray(String nutritionJson) throws JsonProcessingException {
+        System.out.println(nutritionJson);
+        final ObjectMapper mapper = new ObjectMapper();
         NutrientActual[] nutrients = null;
-        try {
-            nutrients = mapper.readValue(nutritionJson, NutrientActual[].class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        nutrients = mapper.readValue(nutritionJson, NutrientActual[].class);
         return nutrients;
     }
 }

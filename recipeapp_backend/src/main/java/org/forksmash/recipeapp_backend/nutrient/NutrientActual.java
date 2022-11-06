@@ -6,12 +6,14 @@ import lombok.*;
 @Setter
 public class NutrientActual extends Nutrient {
     private double amount;
-    private double percentageOfDailyNeeds;
+    private double percentOfDailyNeeds;
 
-    public NutrientActual(String name, double amount, String unit, double percentageOfDailyNeeds) {
+    public NutrientActual(){}
+
+    public NutrientActual(String name, String unit, double amount, double percentOfDailyNeeds) {
         super(name, unit);
         this.amount = amount;
-        this.percentageOfDailyNeeds = percentageOfDailyNeeds;
+        this.percentOfDailyNeeds = percentOfDailyNeeds;
     }
 
     public boolean isLow() {

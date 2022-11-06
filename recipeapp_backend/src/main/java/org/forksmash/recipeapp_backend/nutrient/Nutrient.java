@@ -9,4 +9,5 @@ import lombok.*;
 public abstract class Nutrient {
     private String name;
     private String unit;
+    public Nutrient(){};
 }
