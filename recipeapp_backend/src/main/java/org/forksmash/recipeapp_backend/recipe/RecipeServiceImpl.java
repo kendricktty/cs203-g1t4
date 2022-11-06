@@ -31,7 +31,9 @@ public class RecipeServiceImpl implements RecipeService {
     }  
 
     @Override
-    public Recipe getRecipe(Long id) { return recipes.findById(id).orElse(null); }
+    public Recipe getRecipe(int recipeDataId, Long profileId) { 
+        return recipes.findByRecipeDataIdAndProfileId(recipeDataId, profileId); 
+    }
 
     @Override
     public Recipe addRecipe(Recipe recipe) { 
@@ -39,19 +41,21 @@ public class RecipeServiceImpl implements RecipeService {
         return recipes.save(recipe); 
     }
 
-    @Override
-    public Recipe updateRecipe(Long id, Recipe newRecipe) {
-        return recipes.findById(id).map(recipe -> {
-            // recipe.setData(newRecipe.getData());
-            recipe.setInfo(newRecipe.getInfo());
-            recipe.setInstructions(newRecipe.getInstructions());
-            recipe.setExtendedIngredients(newRecipe.getExtendedIngredients());
-            recipe.setNutrition(newRecipe.getNutrition());
-            return recipes.save(recipe);
-        }).orElse(null);
-    }
+    // @Override
+    // public Recipe updateRecipe(Long id, Recipe newRecipe) {
+    //     return recipes.findById(id).map(recipe -> {
+    //         // recipe.setData(newRecipe.getData());
+    //         recipe.setInfo(newRecipe.getInfo());
+    //         recipe.setInstructions(newRecipe.getInstructions());
+    //         recipe.setExtendedIngredients(newRecipe.getExtendedIngredients());
+    //         recipe.setNutrition(newRecipe.getNutrition());
+    //         return recipes.save(recipe);
+    //     }).orElse(null);
+    // }
 
     @Override
-    public void deleteRecipe(Long id) { recipes.deleteById(id); }
+    public void deleteRecipe(int recipeDataId, Long userProfileId) { 
+        recipes.deleteByRecipeDataIdAndProfileId(recipeDataId, userProfileId); 
+    }
 
 }

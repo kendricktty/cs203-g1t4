@@ -45,7 +45,10 @@ public class Recipe {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "ProfileId")
-    private UserProfile userProfile;
+    private UserProfile userProfile; 
+
+    // @Column(name = "recipe_data_id", columnDefinition="bigint")
+    private int recipeDataId;
 
     @NotNull(message = "An ingredient type must be assigned to an ingredient")
     //@Convert(converter = JpaConverterJson.class)
@@ -62,7 +65,8 @@ public class Recipe {
     @Column(name = "nutrition", columnDefinition = "json")
     private String nutrition;
 
-    public Recipe(String info, String instructions, String extendedIngredients, String nutrition, UserProfile userProfile) {
+    public Recipe(int recipeDataId, String info, String instructions, String extendedIngredients, String nutrition, UserProfile userProfile) {
+        this.recipeDataId = recipeDataId;
         this.info = info;
         this.instructions = instructions;
         this.extendedIngredients = extendedIngredients;
