@@ -8,6 +8,7 @@ public class NutrientActual extends Nutrient {
     private double amount;
     private double percentOfDailyNeeds;
 
+    // Default constructor required for Jackson JSON processor to work
     public NutrientActual(){}
 
     public NutrientActual(String name, String unit, double amount, double percentOfDailyNeeds) {
