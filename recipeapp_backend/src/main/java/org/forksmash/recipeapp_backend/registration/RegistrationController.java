@@ -14,7 +14,7 @@ public class RegistrationController {
     private final RegistrationService registrationService;
 
     @PostMapping
-    public void register(RegistrationRequest request) {
+    public void register(@RequestBody RegistrationRequest request) {
         //return
         log.info("andoawnoawifoeifheiofoainfoifnaoei");
         registrationService.register(request);

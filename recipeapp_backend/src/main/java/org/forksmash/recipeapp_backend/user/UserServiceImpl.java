@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.forksmash.recipeapp_backend.role.Role;
 import org.forksmash.recipeapp_backend.role.RoleRepository;
+import org.forksmash.recipeapp_backend.userprofile.UserProfile;
+import org.forksmash.recipeapp_backend.userprofile.UserProfileRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
+    private final UserProfileRepository userProfileRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -66,6 +69,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Role role = roleRepository.findByName(roleName);
 
         user.getRoles().add(role);
+    }
+
+    @Override
+    public void addProfileToUser(String email, UserProfile userProfile) {
+        log.info("Adding Profile {} to user {}", userProfile, email);
+
+        User user = userRepository.findByEmail(email);
+
+        userProfile.setAppUser(user);
+        userProfileRepository.save(userProfile);
     }
 
     @Override
