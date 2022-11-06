@@ -24,6 +24,7 @@ import javax.validation.constraints.Size;
 import lombok.*;
 
 import org.forksmash.recipeapp_backend.user.User;
+import org.forksmash.recipeapp_backend.userIngredient.UserIngredient;
 import org.forksmash.recipeapp_backend.ingredient.Ingredient;
 import org.forksmash.recipeapp_backend.recipe.Recipe;
 
@@ -61,4 +62,7 @@ public class UserProfile {
 
     @OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recipe> favouriteRecipes;
+
+    @OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserIngredient> userIngredients;
 }
