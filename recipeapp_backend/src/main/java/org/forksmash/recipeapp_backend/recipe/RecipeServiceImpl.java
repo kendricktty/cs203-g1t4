@@ -62,7 +62,4 @@ public class RecipeServiceImpl implements RecipeService {
         recipes.deleteByRecipeDataIdAndProfileId(recipeDataId, userProfileId); 
     }
 
-    @Override
-    public void deleteRecipe(Long id) { recipes.deleteById(id); }
-
 }

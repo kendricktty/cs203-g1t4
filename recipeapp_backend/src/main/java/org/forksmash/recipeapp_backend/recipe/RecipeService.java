@@ -9,4 +9,5 @@ public interface RecipeService {
     Recipe addRecipe(Recipe recipe);
     // Recipe updateRecipe(Long id, Recipe recipe);
     void deleteRecipe(int recipeDataId, Long userProfileId);
+
 }
